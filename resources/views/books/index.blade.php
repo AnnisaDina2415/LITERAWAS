@@ -35,9 +35,9 @@
                     <thead>
                         <tr>
                             <th>Barcode</th>
-                            <th>Judul</th>
+                            <th>Buku</th>
                             <th>Penulis</th>
-                            <th>Penerbit/Tahun</th>
+                            <th>Stok</th>
                             <th>Kategori</th>
                             <th>Status</th>
                             <th>Aksi</th>
@@ -47,15 +47,34 @@
                         @foreach($books as $book)
                             <tr>
                                 <td style="font-family: monospace; font-weight: 600;">{{ $book->barcode }}</td>
-                                <td><strong>{{ $book->title }}</strong></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 35px; height: 50px; border-radius: 4px; overflow: hidden; background-color: #f0f0f0; border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                            @if($book->cover_image)
+                                                <img src="{{ asset($book->cover_image) }}" alt="Sampul" style="width: 100%; height: 100%; object-fit: cover;">
+                                            @else
+                                                <div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); display: flex; align-items: center; justify-content: center; color: var(--light);">
+                                                    <i class="fa-solid fa-book" style="font-size: 0.8rem;"></i>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <div style="font-weight: 600; color: var(--dark);">{{ $book->title }}</div>
+                                            <small style="color: var(--gray-600);">{{ $book->publisher }} ({{ $book->year }})</small>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>{{ $book->author }}</td>
-                                <td>{{ $book->publisher }} ({{ $book->year }})</td>
+                                <td>
+                                    <span style="font-weight: 600; color: var(--dark);">{{ $book->available_stock }}</span>
+                                    <span style="color: var(--gray-500);">/ {{ $book->stock }}</span>
+                                </td>
                                 <td>{{ $book->category }}</td>
                                 <td>
-                                    @if($book->is_available)
+                                    @if($book->available_stock > 0)
                                         <span class="badge badge-success">Tersedia</span>
                                     @else
-                                        <span class="badge badge-danger">Dipinjam</span>
+                                        <span class="badge badge-danger">Habis</span>
                                     @endif
                                 </td>
                                 <td>

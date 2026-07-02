@@ -16,12 +16,17 @@ class Book extends Model
         'publisher',
         'year',
         'category',
+        'stock',
+        'available_stock',
+        'cover_image',
         'is_available',
     ];
 
     protected $casts = [
         'is_available' => 'boolean',
         'year' => 'integer',
+        'stock' => 'integer',
+        'available_stock' => 'integer',
     ];
 
     /**

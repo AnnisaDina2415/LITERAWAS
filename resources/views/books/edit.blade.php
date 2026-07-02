@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <form action="{{ route('books.update', $book->id) }}" method="POST">
+        <form action="{{ route('books.update', $book->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -53,6 +53,22 @@
             <div class="form-group">
                 <label for="category">Kategori Buku</label>
                 <input type="text" name="category" id="category" class="form-control" placeholder="Fiksi, Sejarah, Sains, Komputer, Dsb." value="{{ old('category', $book->category) }}" required list="category_suggestions">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="stock">Jumlah Stok / Salinan Buku</label>
+                    <input type="number" name="stock" id="stock" class="form-control" placeholder="1" value="{{ old('stock', $book->stock) }}" required min="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="cover_image">Foto Sampul Buku (Opsional)</label>
+                    <input type="file" name="cover_image" id="cover_image" class="form-control" accept="image/*" style="padding: 5px;">
+                    @if($book->cover_image)
+                        <div style="margin-top: 8px; display: flex; align-items: center; gap: 8px;">
+                            <img src="{{ asset($book->cover_image) }}" alt="Sampul" style="height: 45px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <small style="color: var(--gray-600);">Sampul saat ini</small>
+                        </div>
+                    @endif
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 15px;">

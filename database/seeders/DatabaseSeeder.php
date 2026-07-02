@@ -83,6 +83,8 @@ class DatabaseSeeder extends Seeder
             'publisher' => 'Bentang Pustaka',
             'year' => 2005,
             'category' => 'Fiksi',
+            'stock' => 5,
+            'available_stock' => 5,
             'is_available' => true,
         ]);
 
@@ -93,6 +95,8 @@ class DatabaseSeeder extends Seeder
             'publisher' => 'Lentera Dipantara',
             'year' => 1980,
             'category' => 'Sejarah',
+            'stock' => 3,
+            'available_stock' => 3,
             'is_available' => true,
         ]);
 
@@ -103,7 +107,9 @@ class DatabaseSeeder extends Seeder
             'publisher' => 'Bentang Pustaka',
             'year' => 2009,
             'category' => 'Romantis',
-            'is_available' => false, // Ahmad is borrowing this right now
+            'stock' => 4,
+            'available_stock' => 3, // Ahmad is borrowing 1 copy right now
+            'is_available' => true,
         ]);
 
         $book4 = Book::create([
@@ -113,6 +119,8 @@ class DatabaseSeeder extends Seeder
             'publisher' => 'Republika',
             'year' => 2015,
             'category' => 'Fiksi',
+            'stock' => 5,
+            'available_stock' => 5,
             'is_available' => true,
         ]);
 
@@ -123,6 +131,8 @@ class DatabaseSeeder extends Seeder
             'publisher' => 'Gramedia Pustaka Utama',
             'year' => 2009,
             'category' => 'Inspiratif',
+            'stock' => 2,
+            'available_stock' => 2,
             'is_available' => true,
         ]);
 
@@ -133,6 +143,8 @@ class DatabaseSeeder extends Seeder
             'publisher' => 'Kompas',
             'year' => 2018,
             'category' => 'Self-Help',
+            'stock' => 3,
+            'available_stock' => 3,
             'is_available' => true,
         ]);
 

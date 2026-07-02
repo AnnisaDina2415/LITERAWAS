@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <form action="{{ route('books.store') }}" method="POST">
+        <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group">
@@ -67,6 +67,16 @@
                     <option value="Self-Help">
                     <option value="Inspiratif">
                 </datalist>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="stock">Jumlah Stok / Salinan Buku</label>
+                    <input type="number" name="stock" id="stock" class="form-control" placeholder="1" value="{{ old('stock', 1) }}" required min="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="cover_image">Foto Sampul Buku (Opsional)</label>
+                    <input type="file" name="cover_image" id="cover_image" class="form-control" accept="image/*" style="padding: 5px;">
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 15px;">

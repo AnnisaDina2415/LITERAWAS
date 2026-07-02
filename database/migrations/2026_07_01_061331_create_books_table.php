@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('publisher');
             $table->integer('year');
             $table->string('category');
+            $table->integer('stock')->default(1);
+            $table->integer('available_stock')->default(1);
+            $table->string('cover_image')->nullable();
             $table->boolean('is_available')->default(true);
             $table->timestamps();
         });

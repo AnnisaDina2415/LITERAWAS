@@ -52,10 +52,9 @@ class BorrowController extends Controller
         if (!$book) {
             return back()->with('error', "Buku dengan barcode '{$request->barcode}' tidak ditemukan.");
         }
-
-        // Validate book availability
-        if (!$book->is_available) {
-            return back()->with('error', "Buku '{$book->title}' sedang dipinjam oleh anggota lain.");
+        // Validate book availability (available stock > 0)
+        if ($book->available_stock <= 0) {
+            return back()->with('error', "Stok buku '{$book->title}' sedang habis.");
         }
 
         // Validate member loan limit
@@ -76,8 +75,9 @@ class BorrowController extends Controller
             'status' => 'borrowed',
         ]);
 
-        // Update book availability
-        $book->update(['is_available' => false]);
+        // Update book availability stock
+        $book->decrement('available_stock');
+        $book->update(['is_available' => $book->available_stock > 0]);
 
         return back()->with('success', "Buku '{$book->title}' berhasil dipinjam oleh '{$member->user->name}'. Jatuh tempo pada " . Carbon::today()->addDays(7)->format('d M Y') . ".");
     }
@@ -131,8 +131,9 @@ class BorrowController extends Controller
         $member->total_loans += 1;
         $member->save();
 
-        // Mark book as available
-        $book->update(['is_available' => true]);
+        // Mark book copy returned (increment available stock)
+        $book->increment('available_stock');
+        $book->update(['is_available' => $book->available_stock > 0]);
 
         $message = "Buku '{$book->title}' berhasil dikembalikan oleh '{$member->user->name}'.";
         if ($isLate) {

@@ -83,6 +83,11 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('books.index') }}" class="sidebar-link {{ request()->routeIs('books.*') ? 'active' : '' }}">
+                                <i class="fa-solid fa-book"></i> Kelola Buku
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('reports.index') }}" class="sidebar-link {{ request()->routeIs('reports.index') ? 'active' : '' }}">
                                 <i class="fa-solid fa-calendar-days"></i> Laporan Bulanan
                             </a>

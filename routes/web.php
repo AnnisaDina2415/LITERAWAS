@@ -49,12 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/borrows/checkin', [BorrowController::class, 'checkin'])->name('borrows.checkin');
         Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
         Route::get('/members', [MemberAdminController::class, 'index'])->name('members.index');
-    });
 
-    // ============================================
-    // SUPER ADMIN ONLY ROUTES
-    // ============================================
-    Route::middleware('role:super_admin')->group(function () {
         // Books CRUD
         Route::resource('/admin/books', BookController::class)->names([
             'index' => 'books.index',
@@ -64,6 +59,12 @@ Route::middleware('auth')->group(function () {
             'update' => 'books.update',
             'destroy' => 'books.destroy',
         ])->except(['show']);
+    });
+
+    // ============================================
+    // SUPER ADMIN ONLY ROUTES
+    // ============================================
+    Route::middleware('role:super_admin')->group(function () {
 
         // Member Adjustment
         Route::get('/admin/members/{member}/edit', [MemberAdminController::class, 'edit'])->name('members.edit');

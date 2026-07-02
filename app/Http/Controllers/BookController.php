@@ -45,13 +45,25 @@ class BookController extends Controller
             'publisher' => 'required|string|max:255',
             'year' => 'required|integer|min:1000|max:' . date('Y'),
             'category' => 'required|string|max:100',
+            'stock' => 'required|integer|min:1',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'barcode.unique' => 'Barcode ini sudah terdaftar pada buku lain.',
             'year.integer' => 'Tahun terbit harus berupa angka.',
             'year.max' => 'Tahun terbit tidak boleh melebihi tahun saat ini.'
         ]);
 
-        Book::create($request->all());
+        $data = $request->except('cover_image');
+        $data['available_stock'] = $request->stock;
+        $data['is_available'] = $request->stock > 0;
+
+        if ($request->hasFile('cover_image')) {
+            $imageName = time() . '.' . $request->cover_image->extension();
+            $request->cover_image->move(public_path('images/covers'), $imageName);
+            $data['cover_image'] = 'images/covers/' . $imageName;
+        }
+
+        Book::create($data);
 
         return redirect()->route('books.index')->with('success', 'Buku baru berhasil ditambahkan ke dalam sistem.');
     }
@@ -76,9 +88,31 @@ class BookController extends Controller
             'publisher' => 'required|string|max:255',
             'year' => 'required|integer|min:1000|max:' . date('Y'),
             'category' => 'required|string|max:100',
+            'stock' => 'required|integer|min:1',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $book->update($request->all());
+        $data = $request->except('cover_image');
+        
+        // Calculate new available_stock based on updated stock limit
+        $diff = $request->stock - $book->stock;
+        $data['available_stock'] = $book->available_stock + $diff;
+        if ($data['available_stock'] < 0) {
+            $data['available_stock'] = 0;
+        }
+        $data['is_available'] = $data['available_stock'] > 0;
+
+        if ($request->hasFile('cover_image')) {
+            // Delete old cover image file if exists
+            if ($book->cover_image && file_exists(public_path($book->cover_image))) {
+                @unlink(public_path($book->cover_image));
+            }
+            $imageName = time() . '.' . $request->cover_image->extension();
+            $request->cover_image->move(public_path('images/covers'), $imageName);
+            $data['cover_image'] = 'images/covers/' . $imageName;
+        }
+
+        $book->update($data);
 
         return redirect()->route('books.index')->with('success', 'Data buku berhasil diperbarui.');
     }
