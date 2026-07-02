@@ -1,0 +1,66 @@
+@extends('layouts.app')
+
+@section('title', 'Kelola Petugas')
+@section('header_title', 'Kelola Petugas Perpustakaan')
+
+@section('content')
+<div class="card" style="margin-bottom: 25px;">
+    <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+        <p style="font-size: 0.9rem; color: var(--gray-600); margin: 0;">Gunakan halaman ini untuk mendaftarkan akun petugas baru yang mengelola sirkulasi buku.</p>
+        <a href="{{ route('officers.create') }}" class="btn btn-secondary">
+            <i class="fa-solid fa-user-plus"></i> Tambah Petugas Baru
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Daftar Akun Petugas</h2>
+        <span class="badge badge-success">{{ $officers->count() }} Petugas Aktif</span>
+    </div>
+    
+    <div class="card-body">
+        @if($officers->isEmpty())
+            <p style="text-align: center; color: var(--gray-600); padding: 20px;">Belum ada akun petugas terdaftar.</p>
+        @else
+            <div class="table-responsive">
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th>ID Pengguna</th>
+                            <th>Nama Petugas</th>
+                            <th>Alamat Email</th>
+                            <th>Tanggal Dibuat</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($officers as $officer)
+                            <tr>
+                                <td>#{{ $officer->id }}</td>
+                                <td><strong>{{ $officer->name }}</strong></td>
+                                <td>{{ $officer->email }}</td>
+                                <td>{{ $officer->created_at->format('d M Y') }}</td>
+                                <td>
+                                    <div style="display: flex; gap: 8px;">
+                                        <a href="{{ route('officers.edit', $officer->id) }}" class="btn btn-outline btn-sm" title="Edit Akun" style="padding: 6px 10px;">
+                                            <i class="fa-solid fa-user-gear"></i>
+                                        </a>
+                                        <form action="{{ route('officers.destroy', $officer->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus petugas ini? Petugas tersebut tidak akan bisa masuk lagi.');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline btn-sm" title="Hapus Akun" style="padding: 6px 10px; color: var(--primary); border-color: rgba(227,30,36,0.2);">
+                                                <i class="fa-solid fa-user-slash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </div>
+</div>
+@endsection
