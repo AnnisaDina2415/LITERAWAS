@@ -88,7 +88,7 @@ class AuthController extends Controller
             'member_code' => $code,
             'total_loans' => 0,
             'points' => 0,
-            'borrow_limit' => 3, // initial limit
+            'borrow_limit' => 1, // initial limit is strictly 1 book
         ]);
 
         // Log in the user

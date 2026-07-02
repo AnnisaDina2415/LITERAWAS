@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             'member_code' => 'MEM-100001',
             'total_loans' => 4,
             'points' => 40,
-            'borrow_limit' => 3,
+            'borrow_limit' => 1,
         ]);
 
         $user2 = User::create([
@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
             'member_code' => 'MEM-100002',
             'total_loans' => 1,
             'points' => 10,
-            'borrow_limit' => 3,
+            'borrow_limit' => 1,
         ]);
 
         $user3 = User::create([
@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
             'member_code' => 'MEM-100003',
             'total_loans' => 0,
             'points' => 0,
-            'borrow_limit' => 3,
+            'borrow_limit' => 1,
         ]);
 
         // 4. Create Books

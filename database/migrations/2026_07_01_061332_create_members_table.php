@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('member_code')->unique();
             $table->integer('total_loans')->default(0);
             $table->integer('points')->default(0);
-            $table->integer('borrow_limit')->default(3); // default max borrowing limit is 3 books
+            $table->integer('borrow_limit')->default(1); // default max borrowing limit is 1 book
             $table->timestamps();
         });
     }
