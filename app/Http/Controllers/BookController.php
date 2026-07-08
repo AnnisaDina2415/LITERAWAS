@@ -46,11 +46,12 @@ class BookController extends Controller
             'year' => 'required|integer|min:1000|max:' . date('Y'),
             'category' => 'required|string|max:100',
             'stock' => 'required|integer|min:1',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:512',
         ], [
             'barcode.unique' => 'Barcode ini sudah terdaftar pada buku lain.',
             'year.integer' => 'Tahun terbit harus berupa angka.',
-            'year.max' => 'Tahun terbit tidak boleh melebihi tahun saat ini.'
+            'year.max' => 'Tahun terbit tidak boleh melebihi tahun saat ini.',
+            'cover_image.max' => 'Ukuran gambar cover tidak boleh melebihi 512 KB.'
         ]);
 
         $data = $request->except('cover_image');
@@ -89,7 +90,12 @@ class BookController extends Controller
             'year' => 'required|integer|min:1000|max:' . date('Y'),
             'category' => 'required|string|max:100',
             'stock' => 'required|integer|min:1',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:512',
+        ], [
+            'barcode.unique' => 'Barcode ini sudah terdaftar pada buku lain.',
+            'year.integer' => 'Tahun terbit harus berupa angka.',
+            'year.max' => 'Tahun terbit tidak boleh melebihi tahun saat ini.',
+            'cover_image.max' => 'Ukuran gambar cover tidak boleh melebihi 512 KB.'
         ]);
 
         $data = $request->except('cover_image');

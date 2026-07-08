@@ -37,7 +37,7 @@
                         Nama Perpustakaan:
                     </label>
                     <input type="text" name="library_name" id="library_name" class="form-control" 
-                           value="{{ $libraryName }}" placeholder="Contoh: Perpustakaan Literawas Bawaslu Lampung" required>
+                           value="{{ $libraryName }}" placeholder="Contoh: Perpustakaan Literawaslu Bawaslu Lampung" required>
                 </div>
 
                 <div class="form-group">

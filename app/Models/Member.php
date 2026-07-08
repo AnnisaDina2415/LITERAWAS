@@ -15,12 +15,14 @@ class Member extends Model
         'total_loans',
         'points',
         'borrow_limit',
+        'is_verified',
     ];
 
     protected $casts = [
         'total_loans' => 'integer',
         'points' => 'integer',
         'borrow_limit' => 'integer',
+        'is_verified' => 'boolean',
     ];
 
     /**

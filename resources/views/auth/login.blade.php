@@ -8,7 +8,7 @@
         <div class="auth-logo" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
             <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 60px; width: auto; object-fit: contain; margin-bottom: 5px;">
             <div style="font-size: 1.8rem; font-weight: 700; color: var(--dark); line-height: 1;">
-                Litera<span style="color: var(--primary);">was</span>
+                Litera<span style="color: var(--primary);">waslu</span>
             </div>
             <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-600); font-weight: 700; line-height: 1;">
                 Bawaslu Prov. Lampung
@@ -26,7 +26,7 @@
             
             <div class="form-group">
                 <label for="email">Alamat Email</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="nama@literawas.com" value="{{ old('email') }}" required autofocus>
+                <input type="email" name="email" id="email" class="form-control" placeholder="nama@literawaslu.com" value="{{ old('email') }}" required autofocus>
             </div>
 
             <div class="form-group">
@@ -52,11 +52,11 @@
         
         <!-- Role Quick Switcher for Demo -->
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--gray-200); text-align: center;">
-            <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--gray-600); margin-bottom: 10px; letter-spacing: 0.5px;">Akun Demo (Password: password):</p>
+            <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--gray-600); margin-bottom: 10px; letter-spacing: 0.5px;">Akun Demo (Password: 123):</p>
             <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                <button type="button" class="btn btn-outline btn-sm" onclick="quickFill('admin@literawas.com')" style="padding: 4px 8px; font-size: 0.7rem;">Super Admin</button>
-                <button type="button" class="btn btn-outline btn-sm" onclick="quickFill('petugas@literawas.com')" style="padding: 4px 8px; font-size: 0.7rem;">Petugas</button>
-                <button type="button" class="btn btn-outline btn-sm" onclick="quickFill('ahmad@literawas.com')" style="padding: 4px 8px; font-size: 0.7rem;">Member (Ahmad)</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="quickFill('admin@literawaslu.com')" style="padding: 4px 8px; font-size: 0.7rem;">Super Admin</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="quickFill('petugas@literawaslu.com')" style="padding: 4px 8px; font-size: 0.7rem;">Admin</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="quickFill('ahmad@literawaslu.com')" style="padding: 4px 8px; font-size: 0.7rem;">User (Ahmad)</button>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
 <script>
     function quickFill(email) {
         document.getElementById('email').value = email;
-        document.getElementById('password').value = 'password';
+        document.getElementById('password').value = '123';
         showToast('Akun demo telah diisi. Silakan klik Masuk!', 'success');
     }
 </script>

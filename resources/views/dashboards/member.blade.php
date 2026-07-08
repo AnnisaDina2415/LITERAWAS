@@ -4,15 +4,20 @@
 @section('header_title', 'Dashboard')
 
 @section('content')
-<div class="welcome-banner">
-    <div style="position: relative; z-index: 5;">
+<div class="welcome-banner" style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+    <div style="position: relative; z-index: 5; flex: 1;">
         <h1>Halo, {{ auth()->user()->name }}!</h1>
-        <p>Selamat datang kembali di Perpustakaan Literawas. Mari temukan buku favorit Anda hari ini.</p>
+        <p>Selamat datang kembali di Perpustakaan Literawaslu. Mari temukan buku favorit Anda hari ini.</p>
         <div style="margin-top: 20px; display: flex; gap: 10px;">
             <a href="{{ route('catalog') }}" class="btn btn-primary btn-sm" style="background-color: var(--light); color: var(--primary);"><i class="fa-solid fa-magnifying-glass"></i> Jelajah Katalog</a>
             <a href="{{ route('member.card') }}" class="btn btn-secondary btn-sm" style="background-color: transparent; border: 1px solid var(--light); color: var(--light);"><i class="fa-solid fa-id-card"></i> Tampilkan Kartu</a>
         </div>
     </div>
+    @if(auth()->user()->avatar)
+        <div style="position: relative; z-index: 5;">
+            <img src="{{ asset(auth()->user()->avatar) }}" alt="Foto Profil" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.8); box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+        </div>
+    @endif
     <div style="position: absolute; right: -50px; bottom: -50px; font-size: 15rem; color: rgba(255,255,255,0.05); transform: rotate(-15deg); pointer-events: none;">
         <i class="fa-solid fa-book"></i>
     </div>
@@ -119,7 +124,7 @@
             <div class="digital-card-container">
                 <div class="digital-card" style="min-height: 180px; padding: 20px;">
                     <div class="digital-card-header">
-                        <div class="card-logo">LITERA<span>WAS</span></div>
+                        <div class="card-logo">Litera<span>waslu</span></div>
                         <div class="card-type">
                             @if($member->points >= 100)
                                 VIP Gold

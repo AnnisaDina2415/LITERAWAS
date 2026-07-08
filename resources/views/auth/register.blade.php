@@ -8,7 +8,7 @@
         <div class="auth-logo" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
             <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 60px; width: auto; object-fit: contain; margin-bottom: 5px;">
             <div style="font-size: 1.8rem; font-weight: 700; color: var(--dark); line-height: 1;">
-                Litera<span style="color: var(--primary);">was</span>
+                Litera<span style="color: var(--primary);">waslu</span>
             </div>
             <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-600); font-weight: 700; line-height: 1;">
                 Bawaslu Prov. Lampung
@@ -31,7 +31,7 @@
 
             <div class="form-group">
                 <label for="email">Alamat Email</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="ahmad@literawas.com" value="{{ old('email') }}" required>
+                <input type="email" name="email" id="email" class="form-control" placeholder="ahmad@literawaslu.com" value="{{ old('email') }}" required>
             </div>
 
             <div class="form-row">

@@ -27,7 +27,7 @@
                 <div class="card-logo" style="display: flex; align-items: center; gap: 8px;">
                     <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 28px; width: auto; object-fit: contain;">
                     <div style="font-size: 1.2rem; font-weight: 700; color: #FFFFFF; line-height: 1;">
-                        Litera<span style="color: var(--primary);">was</span>
+                        Litera<span style="color: var(--primary);">waslu</span>
                     </div>
                 </div>
                 <div class="card-type" style="padding: 4px 10px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: {{ $member->membership_details['badge_bg'] }}; color: {{ $member->membership_details['badge_color'] }}; border-radius: 20px;">

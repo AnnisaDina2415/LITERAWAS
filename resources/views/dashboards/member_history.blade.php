@@ -15,7 +15,7 @@
             <div style="text-align: center; padding: 60px 20px; color: var(--gray-600);">
                 <i class="fa-solid fa-book-bookmark" style="font-size: 3rem; color: var(--gray-300); margin-bottom: 15px;"></i>
                 <p style="font-weight: 600; color: var(--gray-700);">Belum Ada Riwayat Transaksi</p>
-                <p style="font-size: 0.85rem; margin-top: 5px;">Buku yang pernah Anda pinjam di perpustakaan Literawas akan muncul di halaman ini.</p>
+                <p style="font-size: 0.85rem; margin-top: 5px;">Buku yang pernah Anda pinjam di perpustakaan Literawaslu akan muncul di halaman ini.</p>
             </div>
         @else
             <div class="table-responsive">
