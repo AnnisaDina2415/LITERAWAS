@@ -25,7 +25,7 @@
 
 <!-- Stats Dashboard Grid -->
 <div class="grid-stats">
-    <div class="stat-card">
+    <a href="{{ route('catalog') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Koleksi Tersedia</h3>
             <p>{{ $availableBooksCount }} Buku</p>
@@ -33,9 +33,9 @@
         <div class="stat-icon red">
             <i class="fa-solid fa-book"></i>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card">
+    <a href="{{ route('member.history') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Total Peminjaman</h3>
             <p>{{ $totalBorrows }} Kali</p>
@@ -43,9 +43,9 @@
         <div class="stat-icon black">
             <i class="fa-solid fa-clock-rotate-left"></i>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card">
+    <a href="{{ route('member.rewards') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Poin Reward</h3>
             <p>{{ $member->points }} Poin</p>
@@ -53,7 +53,7 @@
         <div class="stat-icon yellow">
             <i class="fa-solid fa-award"></i>
         </div>
-    </div>
+    </a>
 </div>
 
 <div class="dashboard-grid">

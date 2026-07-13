@@ -23,16 +23,22 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Super Admin',
                 'password' => Hash::make('123'),
                 'role' => 'super_admin',
+                'phone' => '0811000000',
+                'security_question' => 'Apa nama hewan favorit Anda?',
+                'security_answer' => 'kucing',
             ]
         );
 
-        // 2. Create or update Admin
+        // 2. Create or update Admin (Petugas)
         $admin = User::updateOrCreate(
             ['email' => 'petugas@literawaslu.com'],
             [
-                'name' => 'Admin Perpus',
+                'name' => 'Petugas Perpus',
                 'password' => Hash::make('123'),
                 'role' => 'admin',
+                'phone' => '0812000000',
+                'security_question' => 'Siapa nama hewan peliharaan Anda?',
+                'security_answer' => 'doggy',
             ]
         );
 
@@ -42,17 +48,21 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Ahmad Yani',
                 'password' => Hash::make('123'),
-                'role' => 'user',
+                'role' => 'member',
+                'phone' => '0813000000',
+                'security_question' => 'Siapa nama hewan peliharaan Anda?',
+                'security_answer' => 'mimi',
             ]
         );
         $user1->member()->firstOrCreate(
             ['user_id' => $user1->id],
             [
-                'member_code' => 'MEM-100001',
+                'member_code' => 'MEM-001',
                 'total_loans' => 4,
                 'points' => 40,
                 'borrow_limit' => 1,
                 'is_verified' => true,
+                'status' => 'active',
             ]
         );
 
@@ -61,17 +71,21 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Budi Sudarsono',
                 'password' => Hash::make('123'),
-                'role' => 'user',
+                'role' => 'member',
+                'phone' => '0814000000',
+                'security_question' => 'Siapa nama hewan peliharaan Anda?',
+                'security_answer' => 'mimi',
             ]
         );
         $user2->member()->firstOrCreate(
             ['user_id' => $user2->id],
             [
-                'member_code' => 'MEM-100002',
+                'member_code' => 'MEM-002',
                 'total_loans' => 1,
                 'points' => 10,
                 'borrow_limit' => 1,
                 'is_verified' => true,
+                'status' => 'active',
             ]
         );
 
@@ -80,17 +94,21 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Citra Lestari',
                 'password' => Hash::make('123'),
-                'role' => 'user',
+                'role' => 'member',
+                'phone' => '0815000000',
+                'security_question' => 'Siapa nama hewan peliharaan Anda?',
+                'security_answer' => 'mimi',
             ]
         );
         $user3->member()->firstOrCreate(
             ['user_id' => $user3->id],
             [
-                'member_code' => 'MEM-100003',
+                'member_code' => 'MEM-003',
                 'total_loans' => 0,
                 'points' => 0,
                 'borrow_limit' => 1,
                 'is_verified' => true,
+                'status' => 'active',
             ]
         );
 

@@ -32,9 +32,26 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-            
             $user = Auth::user();
+            
+            // Check member status if role is member
+            if ($user->role === 'member' && $user->member) {
+                if ($user->member->status === 'pending') {
+                    Auth::logout();
+                    $request->session()->invalidate();
+                    $request->session()->regenerateToken();
+                    return back()->with('warning', 'Akun Anda sedang menunggu verifikasi dari Admin. Silakan hubungi petugas perpustakaan.');
+                }
+                
+                if ($user->member->status === 'rejected') {
+                    Auth::logout();
+                    $request->session()->invalidate();
+                    $request->session()->regenerateToken();
+                    return back()->with('error', 'Pendaftaran akun Anda ditolak oleh Admin.');
+                }
+            }
+            
+            $request->session()->regenerate();
             return redirect()->route('dashboard')->with('success', "Selamat datang kembali, {$user->name}!");
         }
 
@@ -63,10 +80,16 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'phone' => 'required|string|max:20',
+            'security_question' => 'required|string|max:255',
+            'security_answer' => 'required|string|max:255',
         ], [
             'email.unique' => 'Email ini sudah terdaftar di sistem.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
-            'password.min' => 'Password minimal terdiri dari 6 karakter.'
+            'password.min' => 'Password minimal terdiri dari 6 karakter.',
+            'phone.required' => 'Nomor telepon wajib diisi.',
+            'security_question.required' => 'Pertanyaan keamanan wajib dipilih.',
+            'security_answer.required' => 'Jawaban keamanan wajib diisi.',
         ]);
 
         // Create User
@@ -74,13 +97,16 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user', // default role
+            'role' => 'member', // fixed: removed duplicate 'role' assignment
+            'phone' => $request->phone,
+            'security_question' => $request->security_question,
+            'security_answer' => strtolower(trim($request->security_answer)),
         ]);
 
-        // Generate unique member code (e.g. MEM-104928)
-        do {
-            $code = 'MEM-' . rand(100000, 999999);
-        } while (Member::where('member_code', $code)->exists());
+        // Generate sequential member code starting from MEM-001
+        $lastMember = Member::orderBy('id', 'desc')->first();
+        $nextNum = $lastMember ? ((int) str_replace('MEM-', '', $lastMember->member_code)) + 1 : 1;
+        $code = 'MEM-' . str_pad($nextNum, 3, '0', STR_PAD_LEFT);
 
         // Create Member Profile
         Member::create([
@@ -88,14 +114,11 @@ class AuthController extends Controller
             'member_code' => $code,
             'total_loans' => 0,
             'points' => 0,
-            'borrow_limit' => 1, // initial limit is strictly 1 book
+            'borrow_limit' => 1,
             'is_verified' => false,
         ]);
 
-        // Log in the user
-        Auth::login($user);
-
-        return redirect()->route('dashboard')->with('success', 'Pendaftaran berhasil! Kartu anggota digital Anda telah dibuat.');
+        return redirect()->route('login')->with('success', 'Pendaftaran berhasil! Akun Anda (' . $code . ') sedang menunggu verifikasi oleh Admin sebelum Anda dapat masuk.');
     }
 
     /**
@@ -175,6 +198,11 @@ class AuthController extends Controller
      */
     public function showUnverified()
     {
+        // Fixed: Added check to prevent access if not logged in
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        
         return view('auth.unverified');
     }
 }

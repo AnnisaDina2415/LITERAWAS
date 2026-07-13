@@ -18,7 +18,7 @@
 
 <!-- Stats Dashboard Grid -->
 <div class="grid-stats">
-    <div class="stat-card">
+    <a href="{{ route('books.index') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Koleksi Buku</h3>
             <p>{{ $totalBooks }} Buku</p>
@@ -26,9 +26,9 @@
         <div class="stat-icon red">
             <i class="fa-solid fa-book"></i>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card">
+    <a href="{{ route('borrows.index') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Sedang Dipinjam</h3>
             <p>{{ $borrowedBooks }} Buku</p>
@@ -36,9 +36,9 @@
         <div class="stat-icon black">
             <i class="fa-solid fa-hand-holding-hand"></i>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card">
+    <a href="{{ route('members.index') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Anggota Terdaftar</h3>
             <p>{{ $totalMembers }} Member</p>
@@ -46,9 +46,9 @@
         <div class="stat-icon yellow">
             <i class="fa-solid fa-users"></i>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card">
+    <a href="{{ route('borrows.index') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Keterlambatan</h3>
             <p style="{{ $overdueCount > 0 ? 'color: var(--primary);' : '' }}">{{ $overdueCount }} Transaksi</p>
@@ -56,7 +56,7 @@
         <div class="stat-icon red" style="background-color: rgba(var(--primary-rgb), 0.05);">
             <i class="fa-solid fa-circle-exclamation"></i>
         </div>
-    </div>
+    </a>
 </div>
 
 @if($unverifiedMembers->isNotEmpty())

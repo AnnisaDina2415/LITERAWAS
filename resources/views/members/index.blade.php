@@ -40,6 +40,7 @@
                             <th>Kode Member</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>Status</th>
                             <th>Total Peminjaman</th>
                             <th>Reward Poin</th>
                             <th>Batas Pinjam</th>
@@ -53,6 +54,15 @@
                                 <td style="font-family: monospace; font-weight: 700; color: #b58b00;">{{ $member->member_code }}</td>
                                 <td><strong>{{ $member->user->name }}</strong></td>
                                 <td>{{ $member->user->email }}</td>
+                                <td>
+                                    @if($member->status === 'active')
+                                        <span class="badge badge-success" style="background-color: #dcfce7; color: #16a34a;"><i class="fa-solid fa-check"></i> Terverifikasi</span>
+                                    @elseif($member->status === 'pending')
+                                        <span class="badge badge-warning" style="background-color: #fef08a; color: #ca8a04;"><i class="fa-solid fa-clock"></i> Pending</span>
+                                    @elseif($member->status === 'rejected')
+                                        <span class="badge badge-danger" style="background-color: #fee2e2; color: #dc2626;"><i class="fa-solid fa-xmark"></i> Ditolak</span>
+                                    @endif
+                                </td>
                                 <td>{{ $member->total_loans }} Kali</td>
                                 <td>
                                     <span class="badge badge-warning" style="font-weight: 700;">{{ $member->points }} Pts</span>

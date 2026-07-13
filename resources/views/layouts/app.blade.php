@@ -15,7 +15,7 @@
     </script>
     
     <!-- CSS Dependencies -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @yield('styles')
 </head>
@@ -24,17 +24,19 @@
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <div class="sidebar-brand" style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 20px 24px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 38px; width: auto; object-fit: contain;">
-                    <div style="font-size: 1.35rem; font-weight: 700; color: var(--dark); line-height: 1;">
-                        Litera<span style="color: var(--primary);">waslu</span>
+            <a href="{{ route('dashboard') }}" style="text-decoration: none; color: inherit; display: block;">
+                <div class="sidebar-brand" style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 20px 24px; cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 38px; width: auto; object-fit: contain;">
+                        <div style="font-size: 1.35rem; font-weight: 700; color: var(--dark); line-height: 1;">
+                            Litera<span style="color: var(--primary);">waslu</span>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-600); font-weight: 700; line-height: 1; margin-left: 2px;">
+                        Bawaslu Prov. Lampung
                     </div>
                 </div>
-                <div style="font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-600); font-weight: 700; line-height: 1; margin-left: 2px;">
-                    Bawaslu Prov. Lampung
-                </div>
-            </div>
+            </a>
             
             <ul class="sidebar-menu">
                 @auth
@@ -58,8 +60,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('officers.index') }}" class="sidebar-link {{ request()->routeIs('officers.index') ? 'active' : '' }}">
-                                <i class="fa-solid fa-user-shield"></i> Kelola Petugas
+                            <a href="{{ route('accounts.index') }}" class="sidebar-link {{ request()->routeIs('accounts.*') ? 'active' : '' }}">
+                                <i class="fa-solid fa-user-shield"></i> Manajemen Akun
                             </a>
                         </li>
                         <li>
@@ -70,6 +72,11 @@
                         <li>
                             <a href="{{ route('reports.index') }}" class="sidebar-link {{ request()->routeIs('reports.index') ? 'active' : '' }}">
                                 <i class="fa-solid fa-file-invoice-dollar"></i> Laporan
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('verifications.index') }}" class="sidebar-link {{ request()->routeIs('verifications.*') ? 'active' : '' }}">
+                                <i class="fa-solid fa-check-double"></i> Verifikasi
                             </a>
                         </li>
                         <li>
@@ -99,6 +106,11 @@
                         <li>
                             <a href="{{ route('reports.index') }}" class="sidebar-link {{ request()->routeIs('reports.index') ? 'active' : '' }}">
                                 <i class="fa-solid fa-calendar-days"></i> Laporan Bulanan
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('verifications.index') }}" class="sidebar-link {{ request()->routeIs('verifications.*') ? 'active' : '' }}">
+                                <i class="fa-solid fa-check-double"></i> Verifikasi
                             </a>
                         </li>
                     @endif
@@ -142,8 +154,8 @@
             
             <div class="sidebar-footer">
                 @auth
-                    <a href="{{ route('profile.edit') }}" class="user-badge-link" title="Ubah Profil Saya">
-                        <div class="user-badge" style="padding: 6px; margin: -6px; border-radius: var(--border-radius);">
+                    <a href="{{ route('profile.edit') }}" style="text-decoration: none; color: inherit; display: block;">
+                        <div class="user-badge" style="padding: 6px; margin: -6px; border-radius: var(--border-radius); cursor: pointer; transition: background-color 0.2s;">
                             @if(auth()->user()->avatar)
                                 <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid var(--secondary);">
                             @else
@@ -159,10 +171,11 @@
                                     @elseif(in_array(auth()->user()->role, ['admin', 'petugas']))
                                         Admin
                                     @else
-                                        User
+                                        Member
                                     @endif
                                 </p>
                             </div>
+                            <i class="fa-solid fa-pen-to-square" style="margin-left: auto; color: var(--gray-500); font-size: 0.8rem;"></i>
                         </div>
                     </a>
                 @else
@@ -192,7 +205,7 @@
                             @elseif(in_array(auth()->user()->role, ['admin', 'petugas']))
                                 <span class="role-badge role-petugas">Admin</span>
                             @else
-                                <span class="role-badge role-member">User</span>
+                                <span class="role-badge role-member">Member</span>
                             @endif
                         </a>
                         

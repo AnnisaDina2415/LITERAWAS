@@ -51,7 +51,7 @@ class BookController extends Controller
             'barcode.unique' => 'Barcode ini sudah terdaftar pada buku lain.',
             'year.integer' => 'Tahun terbit harus berupa angka.',
             'year.max' => 'Tahun terbit tidak boleh melebihi tahun saat ini.',
-            'cover_image.max' => 'Ukuran gambar cover tidak boleh melebihi 512 KB.'
+            'cover_image.max' => 'Ukuran gambar sampul tidak boleh lebih dari 512 KB.',
         ]);
 
         $data = $request->except('cover_image');
@@ -95,7 +95,7 @@ class BookController extends Controller
             'barcode.unique' => 'Barcode ini sudah terdaftar pada buku lain.',
             'year.integer' => 'Tahun terbit harus berupa angka.',
             'year.max' => 'Tahun terbit tidak boleh melebihi tahun saat ini.',
-            'cover_image.max' => 'Ukuran gambar cover tidak boleh melebihi 512 KB.'
+            'cover_image.max' => 'Ukuran gambar sampul tidak boleh lebih dari 512 KB.',
         ]);
 
         $data = $request->except('cover_image');
@@ -131,6 +131,11 @@ class BookController extends Controller
         // Check if book is currently borrowed
         if (!$book->is_available) {
             return back()->with('error', 'Gagal menghapus buku. Buku sedang dalam status dipinjam.');
+        }
+
+        // Delete cover image if exists
+        if ($book->cover_image && file_exists(public_path($book->cover_image))) {
+            @unlink(public_path($book->cover_image));
         }
 
         $book->delete();
