@@ -15,6 +15,7 @@ class Member extends Model
         'total_loans',
         'points',
         'borrow_limit',
+        'status',
     ];
 
     protected $casts = [

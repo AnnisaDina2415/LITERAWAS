@@ -7,7 +7,7 @@
 <div class="welcome-banner">
     <div style="position: relative; z-index: 5;">
         <h1>Halo, {{ auth()->user()->name }}!</h1>
-        <p>Selamat datang kembali di Perpustakaan Literawas. Mari temukan buku favorit Anda hari ini.</p>
+        <p>Selamat datang kembali di Perpustakaan Literawaslu. Mari temukan buku favorit Anda hari ini.</p>
         <div style="margin-top: 20px; display: flex; gap: 10px;">
             <a href="{{ route('catalog') }}" class="btn btn-primary btn-sm" style="background-color: var(--light); color: var(--primary);"><i class="fa-solid fa-magnifying-glass"></i> Jelajah Katalog</a>
             <a href="{{ route('member.card') }}" class="btn btn-secondary btn-sm" style="background-color: transparent; border: 1px solid var(--light); color: var(--light);"><i class="fa-solid fa-id-card"></i> Tampilkan Kartu</a>
@@ -20,7 +20,7 @@
 
 <!-- Stats Dashboard Grid -->
 <div class="grid-stats">
-    <div class="stat-card">
+    <a href="{{ route('catalog') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Koleksi Tersedia</h3>
             <p>{{ $availableBooksCount }} Buku</p>
@@ -28,9 +28,9 @@
         <div class="stat-icon red">
             <i class="fa-solid fa-book"></i>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card">
+    <a href="{{ route('member.history') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Total Peminjaman</h3>
             <p>{{ $totalBorrows }} Kali</p>
@@ -38,9 +38,9 @@
         <div class="stat-icon black">
             <i class="fa-solid fa-clock-rotate-left"></i>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card">
+    <a href="{{ route('member.rewards') }}" class="stat-card" style="text-decoration: none; color: inherit; cursor: pointer;">
         <div class="stat-info">
             <h3>Poin Reward</h3>
             <p>{{ $member->points }} Poin</p>
@@ -48,7 +48,7 @@
         <div class="stat-icon yellow">
             <i class="fa-solid fa-award"></i>
         </div>
-    </div>
+    </a>
 </div>
 
 <div class="dashboard-grid">

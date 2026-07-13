@@ -19,29 +19,38 @@ class DatabaseSeeder extends Seeder
         // 1. Create Super Admin
         User::create([
             'name' => 'Super Admin',
-            'email' => 'admin@literawas.com',
+            'email' => 'admin@literawaslu.com',
             'password' => Hash::make('password'),
             'role' => 'super_admin',
+            'phone' => '0811000000',
+            'security_question' => 'Apa nama hewan favorit Anda?',
+            'security_answer' => 'kucing',
         ]);
 
         // 2. Create Regular Admin (Petugas)
         User::create([
             'name' => 'Petugas Perpus',
-            'email' => 'petugas@literawas.com',
+            'email' => 'petugas@literawaslu.com',
             'password' => Hash::make('password'),
             'role' => 'petugas',
+            'phone' => '0812000000',
+            'security_question' => 'Siapa nama hewan peliharaan Anda?',
+            'security_answer' => 'doggy',
         ]);
 
         // 3. Create Members
         $user1 = User::create([
             'name' => 'Ahmad Yani',
-            'email' => 'ahmad@literawas.com',
+            'email' => 'ahmad@literawaslu.com',
             'password' => Hash::make('password'),
             'role' => 'member',
+            'phone' => '0813000000',
+            'security_question' => 'Siapa nama hewan peliharaan Anda?',
+            'security_answer' => 'mimi',
         ]);
         $member1 = Member::create([
             'user_id' => $user1->id,
-            'member_code' => 'MEM-100001',
+            'member_code' => 'MEM-001',
             'total_loans' => 4,
             'points' => 40,
             'borrow_limit' => 1,
@@ -49,13 +58,16 @@ class DatabaseSeeder extends Seeder
 
         $user2 = User::create([
             'name' => 'Budi Sudarsono',
-            'email' => 'budi@literawas.com',
+            'email' => 'budi@literawaslu.com',
             'password' => Hash::make('password'),
             'role' => 'member',
+            'phone' => '0814000000',
+            'security_question' => 'Siapa nama hewan peliharaan Anda?',
+            'security_answer' => 'mimi',
         ]);
         $member2 = Member::create([
             'user_id' => $user2->id,
-            'member_code' => 'MEM-100002',
+            'member_code' => 'MEM-002',
             'total_loans' => 1,
             'points' => 10,
             'borrow_limit' => 1,
@@ -63,13 +75,16 @@ class DatabaseSeeder extends Seeder
 
         $user3 = User::create([
             'name' => 'Citra Lestari',
-            'email' => 'citra@literawas.com',
+            'email' => 'citra@literawaslu.com',
             'password' => Hash::make('password'),
             'role' => 'member',
+            'phone' => '0815000000',
+            'security_question' => 'Siapa nama hewan peliharaan Anda?',
+            'security_answer' => 'mimi',
         ]);
         $member3 = Member::create([
             'user_id' => $user3->id,
-            'member_code' => 'MEM-100003',
+            'member_code' => 'MEM-003',
             'total_loans' => 0,
             'points' => 0,
             'borrow_limit' => 1,

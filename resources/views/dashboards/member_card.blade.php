@@ -18,113 +18,170 @@
     </div>
     
     <div class="card-body" style="padding: 30px; display: flex; flex-direction: column; align-items: center; gap: 30px;">
-        <!-- The Membership Card -->
-        <div class="digital-card" style="width: 100%; max-width: 450px; min-height: 260px; padding: 25px; background: {{ $member->membership_details['card_bg'] }} !important; color: #FFFFFF !important; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4); border-radius: 16px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
-            <!-- Shiny Reflection Effect -->
-            <div style="position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(var(--primary-rgb), 0.15) 0%, transparent 60%); border-radius: 50%; pointer-events: none;"></div>
-            
-            <div class="digital-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; z-index: 5;">
-                <div class="card-logo" style="display: flex; align-items: center; gap: 8px;">
-                    <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 28px; width: auto; object-fit: contain;">
-                    <div style="font-size: 1.2rem; font-weight: 700; color: #FFFFFF; line-height: 1;">
-                        Litera<span style="color: var(--primary);">was</span>
-                    </div>
-                </div>
-                <div class="card-type" style="padding: 4px 10px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: {{ $member->membership_details['badge_bg'] }}; color: {{ $member->membership_details['badge_color'] }}; border-radius: 20px;">
-                    {{ $member->membership_details['name'] }}
-                </div>
-            </div>
-            
-            <div class="digital-card-body" style="margin-top: 25px; z-index: 5;">
-                <div class="member-name" style="font-size: 1.35rem; font-weight: 600; color: #FFFFFF;">{{ auth()->user()->name }}</div>
-                <div class="member-id" style="font-size: 1.1rem; color: var(--secondary); margin-top: 5px; font-family: monospace; letter-spacing: 2px;">
-                    {{ $member->member_code }}
-                </div>
-            </div>
-            
-            <div class="digital-card-footer" style="margin-top: 25px; display: flex; justify-content: space-between; align-items: flex-end; z-index: 5;">
-                <div class="card-info-item">
-                    <label style="font-size: 0.65rem; text-transform: uppercase; color: rgba(255,255,255,0.4); display: block;">Tanggal Terdaftar</label>
-                    <span style="font-size: 0.85rem; font-weight: 500; color: #FFFFFF;">{{ $member->created_at->format('d F Y') }}</span>
-                </div>
+        <!-- Premium 3D Flipping Card Container -->
+        <div class="card-flip-container" style="perspective: 1000px; width: 100%; max-width: 450px; height: 260px; cursor: pointer;">
+            <div class="card-flip-inner" id="membershipCard" onclick="toggleCardFlip()" style="position: relative; width: 100%; height: 100%; text-align: left; transition: transform 0.8s; transform-style: preserve-3d; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4); border-radius: 16px;">
                 
-                <div class="card-barcode" style="padding: 8px 12px; background-color: #FFFFFF; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 145px; height: 65px; overflow: hidden; box-shadow: inset 0 0 4px rgba(0,0,0,0.1);">
-                    <svg id="barcode" style="width: 100%; height: 35px;"></svg>
-                    <div class="barcode-text" style="text-align: center; font-size: 0.62rem; color: #1A1A1A; font-weight: 700; margin-top: 2px; letter-spacing: 0.5px; font-family: monospace;">
-                        {{ $member->member_code }}
+                <!-- CARD FRONT -->
+                <div class="card-front" style="position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; background: linear-gradient(135deg, #b8bcbf 0%, #8e9399 100%) !important; color: #1A1A1A !important; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
+                    <!-- Elegant Inner Dashed Border Frame -->
+                    <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px dashed rgba(26,26,26,0.15); border-radius: 12px; pointer-events: none; z-index: 2;"></div>
+                    
+                    <!-- Shiny Reflection Effect -->
+                    <div style="position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%); border-radius: 50%; pointer-events: none;"></div>
+                    
+                    <!-- Center Watermark Logo Bawaslu -->
+                    <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Watermark Bawaslu" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 150px; width: auto; opacity: 0.08; pointer-events: none; z-index: 1; filter: grayscale(100%);">
+                    
+                    <div class="digital-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; z-index: 5;">
+                        <div class="card-logo" style="display: flex; align-items: center; gap: 10px;">
+                            <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 52px; width: auto; object-fit: contain;">
+                            <div style="font-size: 1.45rem; font-weight: 800; color: #1A1A1A; line-height: 1; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">
+                                Literawaslu
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="digital-card-body" style="margin-top: 10px; z-index: 5;">
+                        <div class="member-name" style="font-size: 1.9rem; font-weight: 700; color: #1A1A1A; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">
+                            {{ auth()->user()->name }}
+                        </div>
+                        <div class="member-id" style="font-size: 1.45rem; color: #1A1A1A; margin-top: 5px; font-family: monospace; letter-spacing: 3px; font-weight: bold;">
+                            {{ $member->member_code }}
+                        </div>
+                    </div>
+                    
+                    <div class="digital-card-footer" style="margin-top: 10px; display: flex; justify-content: space-between; align-items: flex-end; z-index: 5;">
+                        <div class="card-info-item">
+                            <label style="font-size: 0.68rem; text-transform: uppercase; color: rgba(0,0,0,0.55); display: block; letter-spacing: 1px; font-weight: 700; margin-bottom: 2px;">Berlaku Sampai</label>
+                            <span style="font-size: 1rem; font-weight: 700; color: #1A1A1A; font-family: 'Montserrat', sans-serif;">{{ $member->created_at->addYear(1)->format('d F Y') }}</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- CARD BACK -->
+                <div class="card-back" style="position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; transform: rotateY(180deg); background: linear-gradient(135deg, #b8bcbf 0%, #8e9399 100%) !important; color: #1A1A1A !important; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; overflow: hidden;">
+                    <!-- Elegant Inner Dashed Border Frame -->
+                    <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px dashed rgba(26,26,26,0.15); border-radius: 12px; pointer-events: none; z-index: 2;"></div>
+                    
+                    <!-- Center Watermark Logo Bawaslu -->
+                    <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Watermark Bawaslu" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 150px; width: auto; opacity: 0.08; pointer-events: none; z-index: 1; filter: grayscale(100%);">
+                    
+                    <!-- Top Logo Bawaslu Lampung -->
+                    <div style="display: flex; align-items: center; gap: 10px; z-index: 5;">
+                        <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 56px; width: auto; object-fit: contain;">
+                        <div style="text-align: left; line-height: 1.1;">
+                            <div style="font-size: 1.3rem; font-weight: 800; color: #1A1A1A; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">BAWASLU</div>
+                            <div style="font-size: 0.52rem; font-weight: 700; color: rgba(0,0,0,0.65); font-family: 'Montserrat', sans-serif; letter-spacing: 0.2px;">BADAN PENGAWAS PEMILIHAN UMUM</div>
+                            <div style="font-size: 0.48rem; font-weight: 700; color: #1A1A1A; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">PROVINSI LAMPUNG</div>
+                        </div>
+                    </div>
+
+                    <!-- Middle Bawaslu Quote -->
+                    <div style="margin: auto 0; z-index: 5; max-width: 380px;">
+                        <p style="font-size: 0.85rem; font-weight: 800; color: #1A1A1A; line-height: 1.5; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2px; margin: 0; font-style: italic;">
+                            "Bersama Rakyat Awasi Pemilu,<br>Bersama Bawaslu Tegakkan Keadilan Pemilu"
+                        </p>
+                    </div>
+
+                    <!-- Bottom White Pill Badge (Social & Web Info) -->
+                    <div style="background-color: #FFFFFF; color: #1A1A1A; border-radius: 20px; padding: 5px 15px; display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 395px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); font-family: 'Montserrat', sans-serif; margin-top: 10px; z-index: 5;">
+                        <!-- Web link with circular globe icon -->
+                        <div style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.58rem;">
+                            <span style="display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 9px;">
+                                <i class="fa-solid fa-globe"></i>
+                            </span>
+                            lampung.bawaslu.go.id
+                        </div>
+                        
+                        <!-- Social links with circular icons -->
+                        <div style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.58rem;">
+                            <div style="display: flex; align-items: center; gap: 3px;">
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 7.5px;">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </span>
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 7.5px;">
+                                    <i class="fa-brands fa-x-twitter"></i>
+                                </span>
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 7.5px;">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </span>
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 7px;">
+                                    <i class="fa-brands fa-youtube"></i>
+                                </span>
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 8px; font-weight: bold; font-family: sans-serif; line-height: 1;">
+                                    @
+                                </span>
+                            </div>
+                            <span style="font-weight: 800; font-size: 0.58rem; margin-left: 2px;">Bawaslu Lampung</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
+
+        <p style="font-size: 0.8rem; color: var(--gray-600); margin-top: -15px; font-style: italic;">
+            *Klik kartu untuk membalik dan melihat bagian belakang.
+        </p>
 
         <div style="background-color: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--border-radius); padding: 20px; width: 100%;">
             <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--dark); margin-bottom: 10px;">
                 <i class="fa-solid fa-circle-info" style="color: var(--primary);"></i> Panduan Penggunaan Kartu Digital:
             </h4>
             <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--gray-700); display: flex; flex-direction: column; gap: 8px;">
-                <li>Tunjukkan kartu digital ini kepada **Petugas Perpustakaan** saat ingin melakukan transaksi peminjaman maupun pengembalian.</li>
-                <li>Petugas akan memindai (scan) barcode di atas menggunakan scanner atau kamera sistem.</li>
+                <li>Tunjukkan kartu digital ini kepada Petugas Perpustakaan saat ingin melakukan transaksi peminjaman maupun pengembalian.</li>
+                <li>Petugas akan mencari data keanggotaan Anda menggunakan Kode Anggota yang tertera pada sisi depan kartu.</li>
                 <li>Kartu ini bersifat permanen dan tidak dapat dipindahtangankan.</li>
-                <li>Redam poin reward Anda di menu **Reward & Poin** untuk menaikkan kapasitas pinjaman kartu Anda.</li>
+                <li>Tukarkan poin reward Anda di menu Reward & Poin untuk menaikkan kapasitas pinjaman kartu Anda.</li>
             </ul>
         </div>
     </div>
 </div>
 
 <style>
+    /* 3D Card Flipping Styles */
+    .card-flip-inner.flipped {
+        transform: rotateY(180deg) !important;
+    }
+    
     @media print {
         body * {
             visibility: hidden;
         }
-        .digital-card, .digital-card * {
+        .card-front, .card-front * {
             visibility: visible;
         }
-        .digital-card {
+        .card-front {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
             box-shadow: none !important;
-            background: {{ $member->membership_details['card_bg'] }} !important;
-            color: #FFFFFF !important;
-            border: 1px solid rgba(255,255,255,0.2) !important;
+            background: linear-gradient(135deg, #b8bcbf 0%, #8e9399 100%) !important;
+            color: #1A1A1A !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
-        }
-        .card-logo span {
-            color: var(--primary) !important;
-        }
-        .member-id {
-            color: var(--secondary) !important;
-        }
-        .barcode-text {
-            color: #1A1A1A !important;
         }
     }
 </style>
 @endsection
 
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Generate real Code128 barcode
-        JsBarcode("#barcode", "{{ $member->member_code }}", {
-            format: "CODE128",
-            width: 2,
-            height: 35,
-            displayValue: false,
-            margin: 0,
-            lineColor: "#1A1A1A"
-        });
-    });
+    function toggleCardFlip() {
+        const cardInner = document.getElementById('membershipCard');
+        cardInner.classList.toggle('flipped');
+    }
 
     function downloadCard() {
-        const card = document.querySelector('.digital-card');
+        const card = document.querySelector('.card-front');
         showToast('Memproses unduhan kartu anggota...', 'warning');
         
-        // Wait briefly for barcode rendering to settle
+        // Wait briefly for rendering to settle
         setTimeout(() => {
             html2canvas(card, {
                 scale: 3, // Very high definition

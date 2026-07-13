@@ -4,6 +4,17 @@
 @section('header_title', 'Katalog Buku')
 
 @section('content')
+@if(auth()->user()->member->status === 'pending')
+    <div class="alert alert-warning" style="background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #ffeeba;">
+        <strong>Perhatian!</strong> Akun Anda sedang menunggu verifikasi dari Admin. Anda belum bisa meminjam buku secara online sampai akun Anda disetujui.
+    </div>
+@endif
+@if(auth()->user()->member->status === 'rejected')
+    <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+        <strong>Pendaftaran Ditolak!</strong> Akun Anda tidak disetujui oleh Admin. Silakan hubungi petugas perpustakaan untuk informasi lebih lanjut.
+    </div>
+@endif
+
 <div class="card" style="margin-bottom: 25px;">
     <div class="card-body">
         <form action="{{ route('catalog') }}" method="GET" style="display: flex; gap: 15px; flex-wrap: wrap;">
@@ -91,6 +102,16 @@
                         </span>
                         <span style="font-size: 0.75rem; color: var(--gray-600); font-family: monospace;">{{ $book->barcode }}</span>
                     </div>
+                    
+                    @if($book->available_stock > 0 && auth()->user()->member->status === 'active')
+                        <form action="{{ route('member.request_borrow') }}" method="POST" style="margin-top: 15px;">
+                            @csrf
+                            <input type="hidden" name="book_id" value="{{ $book->id }}">
+                            <button type="submit" class="btn btn-primary btn-sm" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-book-open"></i> Pinjam Buku Ini
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>

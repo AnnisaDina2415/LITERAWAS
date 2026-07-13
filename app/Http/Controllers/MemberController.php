@@ -7,6 +7,7 @@ use App\Models\Borrow;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\SettingController;
 
 class MemberController extends Controller
 {
@@ -93,5 +94,51 @@ class MemberController extends Controller
         $member->save();
 
         return redirect()->route('member.rewards')->with('success', "Penukaran berhasil! Batas maksimal peminjaman Anda bertambah menjadi {$member->borrow_limit} buku.");
+    }
+
+    /**
+     * Request online borrowing (creates pending borrow request).
+     */
+    public function requestBorrow(Request $request)
+    {
+        $request->validate([
+            'book_id' => 'required|exists:books,id'
+        ]);
+
+        $member = Auth::user()->member;
+        
+        if ($member->status === 'pending') {
+            return back()->with('error', 'Akun Anda sedang menunggu verifikasi oleh Admin. Anda belum bisa meminjam buku.');
+        }
+        if ($member->status === 'rejected') {
+            return back()->with('error', 'Pendaftaran Anda ditolak. Hubungi petugas perpustakaan.');
+        }
+
+        $book = Book::find($request->book_id);
+        
+        if ($book->available_stock <= 0) {
+            return back()->with('error', 'Maaf, buku ini sedang tidak tersedia (stok habis).');
+        }
+
+        // Validate member loan limit
+        $activeLoansCount = Borrow::where('member_id', $member->id)
+            ->whereIn('status', ['borrowed', 'pending'])
+            ->count();
+
+        if ($activeLoansCount >= $member->borrow_limit) {
+            return back()->with('error', "Batas peminjaman Anda sudah tercapai (maksimal {$member->borrow_limit} buku sekaligus).");
+        }
+
+        // Create pending request
+        $loanDuration = SettingController::getSetting('loan_duration', 7);
+        Borrow::create([
+            'member_id' => $member->id,
+            'book_id' => $book->id,
+            'borrow_date' => now(),
+            'due_date' => now()->addDays($loanDuration),
+            'status' => 'pending',
+        ]);
+
+        return back()->with('success', 'Permintaan peminjaman berhasil dikirim. Silakan tunggu persetujuan dari Petugas/Admin.');
     }
 }

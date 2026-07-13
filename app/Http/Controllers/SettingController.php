@@ -58,7 +58,7 @@ class SettingController extends Controller
         
         $googleSheetsUrl = $settings['google_sheets_url'] ?? '';
         $googleSitesUrl = $settings['google_sites_url'] ?? '';
-        $libraryName = $settings['library_name'] ?? 'Literawas';
+        $libraryName = $settings['library_name'] ?? 'Literawaslu';
         $loanDuration = $settings['loan_duration'] ?? 7;
         $lateFee = $settings['late_fee'] ?? 2000;
         $rewardPoints = $settings['reward_points'] ?? 10;

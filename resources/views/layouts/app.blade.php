@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Literawas') - Sistem Informasi Perpustakaan</title>
+    <title>@yield('title', 'Literawaslu') - Sistem Informasi Perpustakaan</title>
     
     <!-- CSS Dependencies -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @yield('styles')
 </head>
@@ -15,17 +15,19 @@
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <div class="sidebar-brand" style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 20px 24px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 38px; width: auto; object-fit: contain;">
-                    <div style="font-size: 1.35rem; font-weight: 700; color: var(--dark); line-height: 1;">
-                        Litera<span style="color: var(--primary);">was</span>
+            <a href="{{ route('dashboard') }}" style="text-decoration: none; color: inherit; display: block;">
+                <div class="sidebar-brand" style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 20px 24px; cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 38px; width: auto; object-fit: contain;">
+                        <div style="font-size: 1.35rem; font-weight: 700; color: var(--dark); line-height: 1;">
+                            Litera<span style="color: var(--primary);">waslu</span>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-600); font-weight: 700; line-height: 1; margin-left: 2px;">
+                        Bawaslu Prov. Lampung
                     </div>
                 </div>
-                <div style="font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-600); font-weight: 700; line-height: 1; margin-left: 2px;">
-                    Bawaslu Prov. Lampung
-                </div>
-            </div>
+            </a>
             
             <ul class="sidebar-menu">
                 @auth
@@ -49,8 +51,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('officers.index') }}" class="sidebar-link {{ request()->routeIs('officers.index') ? 'active' : '' }}">
-                                <i class="fa-solid fa-user-shield"></i> Kelola Petugas
+                            <a href="{{ route('accounts.index') }}" class="sidebar-link {{ request()->routeIs('accounts.*') ? 'active' : '' }}">
+                                <i class="fa-solid fa-user-shield"></i> Manajemen Akun
                             </a>
                         </li>
                         <li>
@@ -61,6 +63,11 @@
                         <li>
                             <a href="{{ route('reports.index') }}" class="sidebar-link {{ request()->routeIs('reports.index') ? 'active' : '' }}">
                                 <i class="fa-solid fa-file-invoice-dollar"></i> Laporan
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('verifications.index') }}" class="sidebar-link {{ request()->routeIs('verifications.*') ? 'active' : '' }}">
+                                <i class="fa-solid fa-check-double"></i> Verifikasi
                             </a>
                         </li>
                         <li>
@@ -90,6 +97,11 @@
                         <li>
                             <a href="{{ route('reports.index') }}" class="sidebar-link {{ request()->routeIs('reports.index') ? 'active' : '' }}">
                                 <i class="fa-solid fa-calendar-days"></i> Laporan Bulanan
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('verifications.index') }}" class="sidebar-link {{ request()->routeIs('verifications.*') ? 'active' : '' }}">
+                                <i class="fa-solid fa-check-double"></i> Verifikasi
                             </a>
                         </li>
                     @endif
@@ -133,12 +145,13 @@
             
             <div class="sidebar-footer">
                 @auth
-                    <div class="user-badge">
-                        <div class="user-avatar">
-                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                        </div>
-                        <div class="user-info">
-                            <h4>{{ auth()->user()->name }}</h4>
+                    <a href="{{ route('profile.edit') }}" style="text-decoration: none; color: inherit; display: block;">
+                        <div class="user-badge" style="cursor: pointer; transition: background-color 0.2s; border-radius: 8px;">
+                            <div class="user-avatar">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                            <div class="user-info">
+                                <h4>{{ auth()->user()->name }}</h4>
                             <p>
                                 @if(auth()->user()->role === 'super_admin')
                                     Super Admin
@@ -149,7 +162,9 @@
                                 @endif
                             </p>
                         </div>
-                    </div>
+                        <i class="fa-solid fa-pen-to-square" style="margin-left: auto; color: var(--gray-500); font-size: 0.8rem;"></i>
+                        </div>
+                    </a>
                 @else
                     <p style="font-size: 0.8rem; text-align: center; color: rgba(255,255,255,0.4)">Sistem Perpustakaan</p>
                 @endauth

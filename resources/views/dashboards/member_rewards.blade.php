@@ -17,11 +17,11 @@
                         Status: 
                         <strong>
                             @if($member->points >= 100)
-                                VIP Gold Member
+                                Gold Member
                             @elseif($member->points >= 40)
                                 Silver Member
                             @else
-                                Standard Member
+                                Bronze Member
                             @endif
                         </strong>
                     </div>

@@ -59,13 +59,19 @@
                 <label for="category">Kategori Buku</label>
                 <input type="text" name="category" id="category" class="form-control" placeholder="Fiksi, Sejarah, Sains, Komputer, Dsb." value="{{ old('category') }}" required list="category_suggestions">
                 <datalist id="category_suggestions">
-                    <option value="Fiksi">
-                    <option value="Sejarah">
-                    <option value="Sains">
-                    <option value="Komputer">
-                    <option value="Romantis">
-                    <option value="Self-Help">
-                    <option value="Inspiratif">
+                    <option value="Pemerintahan">
+                    <option value="Hukum dan Undang-Undang">
+                    <option value="Politik">
+                    <option value="Demokrasi">
+                    <option value="Sosial">
+                    <option value="Keagamaan">
+                    <option value="Sengketa Pemilu">
+                    <option value="Riset Pilkada">
+                    <option value="Akuntansi">
+                    <option value="Skripsi">
+                    <option value="Laporan Hasil Pengawasan">
+                    <option value="Motivasi">
+                    <option value="Novel">
                 </datalist>
             <div class="form-row">
                 <div class="form-group">
