@@ -15,13 +15,17 @@ class Member extends Model
         'total_loans',
         'points',
         'borrow_limit',
+        'is_verified',
         'status',
+        'registered_at',
     ];
 
     protected $casts = [
         'total_loans' => 'integer',
         'points' => 'integer',
         'borrow_limit' => 'integer',
+        'is_verified' => 'boolean',
+        'registered_at' => 'datetime',
     ];
 
     /**
@@ -69,5 +73,83 @@ class Member extends Model
                 'badge_color' => '#FFFFFF',
             ];
         }
+    }
+
+    /**
+     * Scope a query to only include verified members.
+     */
+    public function scopeVerified($query)
+    {
+        return $query->where('is_verified', true);
+    }
+
+    /**
+     * Scope a query to only include pending members.
+     */
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    /**
+     * Scope a query to only include active members.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    /**
+     * Check if member is active.
+     */
+    public function isActive(): bool
+    {
+        return $this->status === 'active';
+    }
+
+    /**
+     * Check if member is pending.
+     */
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
+    }
+
+    /**
+     * Check if member is rejected.
+     */
+    public function isRejected(): bool
+    {
+        return $this->status === 'rejected';
+    }
+
+    /**
+     * Check if member is verified.
+     */
+    public function isVerified(): bool
+    {
+        return $this->is_verified === true;
+    }
+
+    /**
+     * Get borrow limit remaining.
+     */
+    public function getBorrowLimitRemainingAttribute(): int
+    {
+        $currentBorrows = $this->borrows()
+            ->where('status', 'borrowed')
+            ->count();
+        
+        return max(0, $this->borrow_limit - $currentBorrows);
+    }
+
+    /**
+     * Check if member can borrow more books.
+     */
+    public function canBorrow(): bool
+    {
+        return $this->isActive() && 
+               $this->isVerified() && 
+               $this->getBorrowLimitRemainingAttribute() > 0;
     }
 }

@@ -23,73 +23,82 @@
             <div class="card-flip-inner" id="membershipCard" onclick="toggleCardFlip()" style="position: relative; width: 100%; height: 100%; text-align: left; transition: transform 0.8s; transform-style: preserve-3d; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4); border-radius: 16px;">
                 
                 <!-- CARD FRONT -->
-                <div class="card-front" style="position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; background: linear-gradient(135deg, #b8bcbf 0%, #8e9399 100%) !important; color: #1A1A1A !important; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
+                <div class="card-front" style="position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; background: {{ $member->membership_details['card_bg'] }} !important; color: #FFFFFF !important; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
                     <!-- Elegant Inner Dashed Border Frame -->
-                    <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px dashed rgba(26,26,26,0.15); border-radius: 12px; pointer-events: none; z-index: 2;"></div>
+                    <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px dashed rgba(255,255,255,0.15); border-radius: 12px; pointer-events: none; z-index: 2;"></div>
                     
                     <!-- Shiny Reflection Effect -->
-                    <div style="position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%); border-radius: 50%; pointer-events: none;"></div>
+                    <div style="position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%); border-radius: 50%; pointer-events: none;"></div>
                     
-                    <!-- Center Watermark Logo Bawaslu -->
-                    <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Watermark Bawaslu" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 150px; width: auto; opacity: 0.08; pointer-events: none; z-index: 1; filter: grayscale(100%);">
+                    <!-- Center Watermark Logo -->
+                    <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Watermark Bawaslu" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 150px; width: auto; opacity: 0.06; pointer-events: none; z-index: 1; filter: grayscale(100%);">
                     
                     <div class="digital-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; z-index: 5;">
                         <div class="card-logo" style="display: flex; align-items: center; gap: 10px;">
                             <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 52px; width: auto; object-fit: contain;">
-                            <div style="font-size: 1.45rem; font-weight: 800; color: #1A1A1A; line-height: 1; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">
-                                Literawaslu
+                            <div style="font-size: 1.45rem; font-weight: 800; color: #FFFFFF; line-height: 1; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">
+                                Litera<span style="color: var(--primary);">waslu</span>
                             </div>
+                        </div>
+                        <div class="card-badge" style="background: {{ $member->membership_details['badge_bg'] }}; color: {{ $member->membership_details['badge_color'] }}; padding: 4px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+                            {{ $member->membership_details['name'] }}
                         </div>
                     </div>
                     
                     <div class="digital-card-body" style="margin-top: 10px; z-index: 5;">
-                        <div class="member-name" style="font-size: 1.9rem; font-weight: 700; color: #1A1A1A; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">
+                        <div class="member-name" style="font-size: 1.9rem; font-weight: 700; color: #FFFFFF; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                             {{ auth()->user()->name }}
                         </div>
-                        <div class="member-id" style="font-size: 1.45rem; color: #1A1A1A; margin-top: 5px; font-family: monospace; letter-spacing: 3px; font-weight: bold;">
+                        <div class="member-id" style="font-size: 1.45rem; color: rgba(255,255,255,0.8); margin-top: 5px; font-family: monospace; letter-spacing: 3px; font-weight: bold;">
                             {{ $member->member_code }}
                         </div>
                     </div>
                     
                     <div class="digital-card-footer" style="margin-top: 10px; display: flex; justify-content: space-between; align-items: flex-end; z-index: 5;">
                         <div class="card-info-item">
-                            <label style="font-size: 0.68rem; text-transform: uppercase; color: rgba(0,0,0,0.55); display: block; letter-spacing: 1px; font-weight: 700; margin-bottom: 2px;">Berlaku Sampai</label>
-                            <span style="font-size: 1rem; font-weight: 700; color: #1A1A1A; font-family: 'Montserrat', sans-serif;">{{ $member->created_at->addYear(1)->format('d F Y') }}</span>
+                            <label style="font-size: 0.68rem; text-transform: uppercase; color: rgba(255,255,255,0.6); display: block; letter-spacing: 1px; font-weight: 700; margin-bottom: 2px;">Berlaku Sampai</label>
+                            <span style="font-size: 1rem; font-weight: 700; color: #FFFFFF; font-family: 'Montserrat', sans-serif;">{{ $member->created_at->addYear(1)->format('d F Y') }}</span>
+                        </div>
+                        <div class="card-info-item" style="text-align: right;">
+                            <label style="font-size: 0.68rem; text-transform: uppercase; color: rgba(255,255,255,0.6); display: block; letter-spacing: 1px; font-weight: 700; margin-bottom: 2px;">Total Poin</label>
+                            <span style="font-size: 1rem; font-weight: 700; color: #FFFFFF; font-family: 'Montserrat', sans-serif;">{{ $member->points }} Poin</span>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- CARD BACK -->
-                <div class="card-back" style="position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; transform: rotateY(180deg); background: linear-gradient(135deg, #b8bcbf 0%, #8e9399 100%) !important; color: #1A1A1A !important; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; overflow: hidden;">
+                <div class="card-back" style="position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; transform: rotateY(180deg); background: {{ $member->membership_details['card_bg'] }} !important; color: #FFFFFF !important; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; overflow: hidden;">
                     <!-- Elegant Inner Dashed Border Frame -->
-                    <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px dashed rgba(26,26,26,0.15); border-radius: 12px; pointer-events: none; z-index: 2;"></div>
+                    <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px dashed rgba(255,255,255,0.15); border-radius: 12px; pointer-events: none; z-index: 2;"></div>
                     
-                    <!-- Center Watermark Logo Bawaslu -->
-                    <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Watermark Bawaslu" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 150px; width: auto; opacity: 0.08; pointer-events: none; z-index: 1; filter: grayscale(100%);">
+                    <!-- Shiny Reflection Effect -->
+                    <div style="position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%); border-radius: 50%; pointer-events: none;"></div>
+                    
+                    <!-- Center Watermark Logo -->
+                    <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Watermark Bawaslu" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 150px; width: auto; opacity: 0.06; pointer-events: none; z-index: 1; filter: grayscale(100%);">
                     
                     <!-- Top Logo Bawaslu Lampung -->
                     <div style="display: flex; align-items: center; gap: 10px; z-index: 5;">
                         <img src="{{ asset('images/logo-bawaslu.png') }}" alt="Logo Bawaslu" style="height: 56px; width: auto; object-fit: contain;">
                         <div style="text-align: left; line-height: 1.1;">
-                            <div style="font-size: 1.3rem; font-weight: 800; color: #1A1A1A; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">BAWASLU</div>
-                            <div style="font-size: 0.52rem; font-weight: 700; color: rgba(0,0,0,0.65); font-family: 'Montserrat', sans-serif; letter-spacing: 0.2px;">BADAN PENGAWAS PEMILIHAN UMUM</div>
-                            <div style="font-size: 0.48rem; font-weight: 700; color: #1A1A1A; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">PROVINSI LAMPUNG</div>
+                            <div style="font-size: 1.3rem; font-weight: 800; color: #FFFFFF; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">BAWASLU</div>
+                            <div style="font-size: 0.52rem; font-weight: 700; color: rgba(255,255,255,0.7); font-family: 'Montserrat', sans-serif; letter-spacing: 0.2px;">BADAN PENGAWAS PEMILIHAN UMUM</div>
+                            <div style="font-size: 0.48rem; font-weight: 700; color: #FFFFFF; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;">PROVINSI LAMPUNG</div>
                         </div>
                     </div>
 
                     <!-- Middle Bawaslu Quote -->
                     <div style="margin: auto 0; z-index: 5; max-width: 380px;">
-                        <p style="font-size: 0.85rem; font-weight: 800; color: #1A1A1A; line-height: 1.5; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2px; margin: 0; font-style: italic;">
+                        <p style="font-size: 0.85rem; font-weight: 800; color: #FFFFFF; line-height: 1.5; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2px; margin: 0; font-style: italic; text-shadow: 0 2px 4px rgba(0,0,0,0.15);">
                             "Bersama Rakyat Awasi Pemilu,<br>Bersama Bawaslu Tegakkan Keadilan Pemilu"
                         </p>
                     </div>
 
                     <!-- Bottom White Pill Badge (Social & Web Info) -->
-                    <div style="background-color: #FFFFFF; color: #1A1A1A; border-radius: 20px; padding: 5px 15px; display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 395px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); font-family: 'Montserrat', sans-serif; margin-top: 10px; z-index: 5;">
+                    <div style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 15px; display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 395px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); font-family: 'Montserrat', sans-serif; margin-top: 10px; z-index: 5;">
                         <!-- Web link with circular globe icon -->
                         <div style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.58rem;">
-                            <span style="display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 9px;">
+                            <span style="display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border: 1.2px solid rgba(255,255,255,0.6); border-radius: 50%; font-size: 9px;">
                                 <i class="fa-solid fa-globe"></i>
                             </span>
                             lampung.bawaslu.go.id
@@ -98,19 +107,19 @@
                         <!-- Social links with circular icons -->
                         <div style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.58rem;">
                             <div style="display: flex; align-items: center; gap: 3px;">
-                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 7.5px;">
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid rgba(255,255,255,0.6); border-radius: 50%; font-size: 7.5px;">
                                     <i class="fa-brands fa-facebook-f"></i>
                                 </span>
-                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 7.5px;">
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid rgba(255,255,255,0.6); border-radius: 50%; font-size: 7.5px;">
                                     <i class="fa-brands fa-x-twitter"></i>
                                 </span>
-                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 7.5px;">
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid rgba(255,255,255,0.6); border-radius: 50%; font-size: 7.5px;">
                                     <i class="fa-brands fa-instagram"></i>
                                 </span>
-                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 7px;">
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid rgba(255,255,255,0.6); border-radius: 50%; font-size: 7px;">
                                     <i class="fa-brands fa-youtube"></i>
                                 </span>
-                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid #1A1A1A; border-radius: 50%; font-size: 8px; font-weight: bold; font-family: sans-serif; line-height: 1;">
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border: 1.2px solid rgba(255,255,255,0.6); border-radius: 50%; font-size: 8px; font-weight: bold; font-family: sans-serif; line-height: 1;">
                                     @
                                 </span>
                             </div>
@@ -159,9 +168,9 @@
             top: 50%;
             transform: translate(-50%, -50%);
             box-shadow: none !important;
-            background: linear-gradient(135deg, #b8bcbf 0%, #8e9399 100%) !important;
-            color: #1A1A1A !important;
-            border: 1px solid rgba(0,0,0,0.1) !important;
+            background: {{ $member->membership_details['card_bg'] }} !important;
+            color: #FFFFFF !important;
+            border: 1px solid rgba(255,255,255,0.15) !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }

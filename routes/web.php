@@ -39,12 +39,14 @@ Route::middleware('guest')->group(function () {
 // 3. Protected Routes (Authenticated users only)
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/photo', [ProfileController::class, 'deletePhoto'])->name('profile.delete_photo');
+
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // ============================================
     // MEMBER SPECIFIC ROUTES
@@ -59,23 +61,16 @@ Route::middleware('auth')->group(function () {
     });
 
     // ============================================
-    // PETUGAS & SUPER ADMIN SHARED ROUTES
+    // PETUGAS, ADMIN & SUPER ADMIN SHARED ROUTES
     // ============================================
-    Route::middleware('role:petugas,super_admin')->group(function () {
+    Route::middleware('role:admin,petugas,super_admin')->group(function () {
         Route::get('/borrows', [BorrowController::class, 'index'])->name('borrows.index');
         Route::post('/borrows/checkout', [BorrowController::class, 'checkout'])->name('borrows.checkout');
         Route::post('/borrows/checkin', [BorrowController::class, 'checkin'])->name('borrows.checkin');
         Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
         Route::get('/members', [MemberAdminController::class, 'index'])->name('members.index');
-        
-        // Verifications
-        Route::get('/verifications', [VerificationController::class, 'index'])->name('verifications.index');
-        Route::post('/verifications/member/{member}/approve', [VerificationController::class, 'approveMember'])->name('verifications.member.approve');
-        Route::post('/verifications/member/{member}/reject', [VerificationController::class, 'rejectMember'])->name('verifications.member.reject');
-        Route::post('/verifications/borrow/{borrow}/approve', [VerificationController::class, 'approveBorrow'])->name('verifications.borrow.approve');
-        Route::post('/verifications/borrow/{borrow}/reject', [VerificationController::class, 'rejectBorrow'])->name('verifications.borrow.reject');
-        Route::post('/verifications/reset-request/{resetRequest}/approve', [VerificationController::class, 'approveResetRequest'])->name('verifications.reset.approve');
-        Route::post('/verifications/reset-request/{resetRequest}/reject', [VerificationController::class, 'rejectResetRequest'])->name('verifications.reset.reject');
+        Route::post('/admin/members/{member}/verify', [MemberAdminController::class, 'verify'])->name('members.verify');
+        Route::post('/admin/members/{member}/reject', [MemberAdminController::class, 'reject'])->name('members.reject');
 
         // Books CRUD
         Route::resource('/admin/books', BookController::class)->names([
@@ -86,19 +81,29 @@ Route::middleware('auth')->group(function () {
             'update' => 'books.update',
             'destroy' => 'books.destroy',
         ])->except(['show']);
+
+        // Verifications
+        Route::get('/verifications', [VerificationController::class, 'index'])->name('verifications.index');
+        Route::post('/verifications/member/{member}/approve', [VerificationController::class, 'approveMember'])->name('verifications.member.approve');
+        Route::post('/verifications/member/{member}/reject', [VerificationController::class, 'rejectMember'])->name('verifications.member.reject');
+        Route::post('/verifications/borrow/{borrow}/approve', [VerificationController::class, 'approveBorrow'])->name('verifications.borrow.approve');
+        Route::post('/verifications/borrow/{borrow}/reject', [VerificationController::class, 'rejectBorrow'])->name('verifications.borrow.reject');
+        Route::post('/verifications/reset-request/{resetRequest}/approve', [VerificationController::class, 'approveResetRequest'])->name('verifications.reset.approve');
+        Route::post('/verifications/reset-request/{resetRequest}/reject', [VerificationController::class, 'rejectResetRequest'])->name('verifications.reset.reject');
     });
 
     // ============================================
     // SUPER ADMIN ONLY ROUTES
     // ============================================
     Route::middleware('role:super_admin')->group(function () {
-    
         // Account Management
         Route::get('/admin/accounts', [AccountController::class, 'index'])->name('accounts.index');
         Route::post('/admin/accounts', [AccountController::class, 'store'])->name('accounts.store');
         Route::post('/admin/accounts/{user}/demote', [AccountController::class, 'demote'])->name('accounts.demote');
 
-        // Member Adjustment
+        // Member Management (Full CRUD)
+        Route::get('/admin/members/create', [MemberAdminController::class, 'create'])->name('members.create');
+        Route::post('/admin/members', [MemberAdminController::class, 'store'])->name('members.store');
         Route::get('/admin/members/{member}/edit', [MemberAdminController::class, 'edit'])->name('members.edit');
         Route::put('/admin/members/{member}', [MemberAdminController::class, 'update'])->name('members.update');
         Route::delete('/admin/members/{member}', [MemberAdminController::class, 'destroy'])->name('members.destroy');
